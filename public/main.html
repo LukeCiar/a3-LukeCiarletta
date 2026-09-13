@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset='utf-8' name='CS4241 Assignment 3' />
+    <script src='js/main.js'></script>
+    <link rel='stylesheet' href='css/main.css' />
+    
+    <!-- get rid of favicon error -->
+    <link rel='icon' href='data:;base64,iVBORw0KGgo=' />
+  </head>
+  <body>
+    <h1>Warhammer Score Tracker</h1>
+
+    <form id="scoreForm">
+      <label for="userName">Your Name</label>
+      <input type="text" id="userName" />
+
+      <label for="oppName">Opponent's Name</label>
+      <input type="text" id="oppName" />
+
+      <label for="userScore">Your Score</label>
+      <input type="number" id="userScore" />
+
+      <label for="oppScore">Opponent's Score</label>
+      <input type="number" id="oppScore" />
+
+      <label for="userFaction">Your Faction</label>
+      <select id=userFaction>
+        <option value="">--Choose a Faction--</option>
+        <option value="Imperium">Imperium</option>
+        <option value="Chaos">Chaos</option>
+        <option value="Xenos">Xenos</option>
+      </select>
+
+      <label for="oppFaction">Opponent's Faction</label>
+      <select id=oppFaction>
+        <option value="">--Choose a Faction--</option>
+        <option value="Imperium">Imperium</option>
+        <option value="Chaos">Chaos</option>
+        <option value="Xenos">Xenos</option>
+      </select>
+
+      <div id="submitContainer">
+        <input type="submit" id="submit" value="Submit" />
+      </div>
+    </form>
+
+    <hr>
+
+  </body>
+</html>

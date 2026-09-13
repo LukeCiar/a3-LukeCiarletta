@@ -1,5 +1,3 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
-
 let scoreTable = null
 
 //-1 = not modifying, number = modifying that index/id
@@ -7,17 +5,15 @@ let modifyingRow = -1
 let modifyingId = -1
 
 const submit = async (event) => {
-    // stop form submission from trying to load
-    // a new .html page for displaying results...
-    // this was the original browser behavior and still
-    // remains to this day
     event.preventDefault()
 
     const userName = document.querySelector('#userName').value,
-          oppName = document.querySelector('#oppName').value,
-          userScore = parseInt(document.querySelector('#userScore').value) | 0,
-          oppScore = parseInt(document.querySelector('#oppScore').value) | 0,
-          jsonData = { userName, oppName, userScore, oppScore }
+        userScore = parseInt(document.querySelector('#userScore').value) | 0,
+        userFaction = document.querySelector('#userFaction').value,
+        oppName = document.querySelector('#oppName').value,
+        oppScore = parseInt(document.querySelector('#oppScore').value) | 0,
+        oppFaction = document.querySelector('#oppFaction').value,
+        jsonData = { userName, userScore, userFaction, oppName, oppScore, oppFaction }
 
     let response
     if(modifyingRow === -1) {
@@ -67,20 +63,20 @@ const setModifying = (row, id) => {
         clearModifying()
     }
     
-    //used to highlight the relevant modify button
-    const button = scoreTable.children[row+1].children[6]
+    //used to highlight the relevant modify button's table cell
+    const buttonCell = scoreTable.children[row+1].children[8]
     const modifyInstructions = document.querySelector("#modifyInstructions")
 
     if(modifyingRow === row) {
         modifyingRow = -1
         modifyingId = -1
-        button.className = ""
+        buttonCell.className = ""
         modifyInstructions.className = "hidden"
     }
     else {
         modifyingRow = row
         modifyingId = id
-        button.className = "modifying"
+        buttonCell.className = "modifying"
         modifyInstructions.className = ""
     }
 }
@@ -88,9 +84,11 @@ const setModifying = (row, id) => {
 const updateScoreTable = (allGames) => {
     scoreTable.innerHTML = `<tr>
         <th>Your Name</th>
-        <th>Opponent's Name</th>
         <th>Your Score</th>
+        <th>Your Faction</th>
+        <th>Opponent's Name</th>
         <th>Opponent's Score</th>
+        <th>Opponent's Faction</th>
         <th>Result</th>
         <th>Del.</th>
         <th>Mod.</th>
@@ -100,13 +98,13 @@ const updateScoreTable = (allGames) => {
         let game = allGames[i]
 
         const deleteButton = document.createElement('button')
-        deleteButton.innerHTML = '<img class="icon" src="../icons/delete.png" />'
+        deleteButton.innerHTML = '<img class="icon" src="../icons/delete.png" alt="delete" />'
         deleteButton.onclick = async () => { await deleteGame(game._id) }
         const deleteButtonCell = document.createElement('td')
         deleteButtonCell.appendChild(deleteButton)
 
         const modifyButton = document.createElement('button')
-        modifyButton.innerHTML = '<img class="icon" src="../icons/modify.png" />'
+        modifyButton.innerHTML = '<img class="icon" src="../icons/modify.png" alt="modify" />'
         modifyButton.onclick = () => { setModifying(i, game._id) }
         const modifyButtonCell = document.createElement('td')
         modifyButtonCell.appendChild(modifyButton)
@@ -114,9 +112,11 @@ const updateScoreTable = (allGames) => {
         const tr = document.createElement('tr')
         tr.innerHTML = `
         <td>${game.userName}</td>
-        <td>${game.oppName}</td>
         <td>${game.userScore}</td>
+        <td>${game.userFaction}</td>
+        <td>${game.oppName}</td>
         <td>${game.oppScore}</td>
+        <td>${game.oppFaction}</td>
         <td>${game.result}</td>
         `
         tr.appendChild(deleteButtonCell)
