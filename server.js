@@ -24,7 +24,7 @@ app.use(async (req, res, next) => {
     if (!gameCollection) { 
         gameCollection = await client.db("a3").collection("game-data")
         userCollection = await client.db("a3").collection("user-data")
-     }
+    }
     next()
 })
 
@@ -71,12 +71,12 @@ const setResult = (data) => {
 }
 
 const sendData = async (req, res) => {
-    const allGames = await getGames()
-    res.status(200).send(allGames)
+    const userGames = await getGames(req.session.username)
+    res.status(200).send(userGames)
 }
 
-const getGames = async () => {
-    const games = await gameCollection.find().toArray()
+const getGames = async (username) => {
+    const games = await gameCollection.find({authName: username}).toArray()
     return games
 }
 
@@ -100,6 +100,7 @@ app.get('/games', sendData)
 app.post('/submit', async (req, res) => {
     const game = req.body
     setResult(game)
+    game.authName = req.session.username
     await addGame(game)
     await sendData(req, res)
 })
@@ -113,6 +114,7 @@ app.post('/delete', async (req, res) => {
 app.post('/modify', async (req, res) => {
     const game = req.body
     setResult(game)
+    game.authName = req.session.username
     await modifyGame(game)
     await sendData(res, res)
 })

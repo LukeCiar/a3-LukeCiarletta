@@ -1,28 +1,15 @@
-:root {
-  --primary: #e8e8e8;
-  --background: #202020;
-}
-
 body {
-  background: var(--background);
-  color: var(--primary);
-  font-family: Arial, sans-serif;
-
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-h1 {
-  font-family: Garamond, serif;
-}
-
 #scoreForm {
   display: grid;
   grid-template-columns: 3fr 5fr 4fr 5fr;
   gap: .5rem;
-  width: 40rem;
+  width: 45rem;
 }
 
 #submitContainer {
@@ -32,15 +19,9 @@ h1 {
   margin: 1rem;
 }
 
-#submit {
-  width: 6rem;
-}
-
 table, th, td {
   text-align: center;
-  border: 1px solid var(--primary);
-  border-collapse: collapse;
-  padding: 3px 8px; /* top/bottom   left/right */
+  padding: 4px 8px; /* top/bottom   left/right */
   margin: 1rem;
 }
 
@@ -50,13 +31,9 @@ table, th, td {
 }
 
 .modifying {
-  background: darkred;
+  background: #D30000;
 }
 
 .hidden {
   display: none;
-}
-
-hr {
-  width: 80%
 }
