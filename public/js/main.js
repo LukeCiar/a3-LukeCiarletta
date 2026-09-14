@@ -35,8 +35,8 @@ const submit = async (event) => {
         clearModifying()
     }
 
-    const allGames = await response.json()
-    updateScoreTable(allGames)
+    const games = await response.json()
+    updateScoreTable(games)
 }
 
 const deleteGame = async (id) => {
@@ -49,8 +49,8 @@ const deleteGame = async (id) => {
         body: JSON.stringify({id})
     })
 
-    const allGames = await response.json()
-    updateScoreTable(allGames)
+    const games = await response.json()
+    updateScoreTable(games)
 }
 
 const clearModifying = () => { 
@@ -58,30 +58,36 @@ const clearModifying = () => {
 }
 
 const setModifying = (row, id) => {
-    if(modifyingRow != -1 && modifyingRow != row) {
+    if(modifyingRow != row) {
         //reset the currently modifying game (needed to avoid 2 button highlights)
         clearModifying()
     }
     
     //used to highlight the relevant modify button's table cell
     const buttonCell = scoreTable.children[row+1].children[8]
+    const button = buttonCell.children[0]
     const modifyInstructions = document.querySelector("#modifyInstructions")
+    console.log(typeof(buttonCell.children[0].innerHTML))
+    console.log(buttonCell.children[0].innerHTML)
 
     if(modifyingRow === row) {
         modifyingRow = -1
         modifyingId = -1
         buttonCell.className = ""
+        //remove last character at the end if it is an asterisk (indicates that it was being modified)
+        if(button.innerHTML.at(-1) == "*") { button.innerHTML = button.innerHTML.slice(0,-1) }
         modifyInstructions.className = "hidden"
     }
     else {
         modifyingRow = row
         modifyingId = id
         buttonCell.className = "modifying"
+        button.innerHTML = button.innerHTML + "*"
         modifyInstructions.className = ""
     }
 }
 
-const updateScoreTable = (allGames) => {
+const updateScoreTable = (games) => {
     scoreTable.innerHTML = `<tr>
         <th>Your Name</th>
         <th>Your Score</th>
@@ -91,20 +97,20 @@ const updateScoreTable = (allGames) => {
         <th>Opponent's Faction</th>
         <th>Result</th>
         <th>Del.</th>
-        <th>Mod.</th>
+        <th id="modHeader">Mod.</th>
     </tr>` //last two headers are for delete and modify buttons
 
-    for (let i = 0; i < allGames.length; i++) {
-        let game = allGames[i]
+    for (let i = 0; i < games.length; i++) {
+        let game = games[i]
 
         const deleteButton = document.createElement('button')
-        deleteButton.innerHTML = '<img class="icon" src="../icons/delete.png" alt="delete" />'
+        deleteButton.innerHTML = '<img class="icon" src="../icons/delete.png" alt="Delete this game" />'
         deleteButton.onclick = async () => { await deleteGame(game._id) }
         const deleteButtonCell = document.createElement('td')
         deleteButtonCell.appendChild(deleteButton)
 
         const modifyButton = document.createElement('button')
-        modifyButton.innerHTML = '<img class="icon" src="../icons/modify.png" alt="modify" />'
+        modifyButton.innerHTML = '<img class="icon" src="../icons/modify.png" alt="Modify this game (see instructions that appear below for more details)" />'
         modifyButton.onclick = () => { setModifying(i, game._id) }
         const modifyButtonCell = document.createElement('td')
         modifyButtonCell.appendChild(modifyButton)
@@ -133,15 +139,15 @@ window.onload = async () => {
     document.querySelector('form').onsubmit = submit
 
     scoreTable = document.createElement('table')
-    document.body.append(scoreTable)
+    document.body.children[0].append(scoreTable) //only child of body is main
 
     let modifyText = document.createElement('p')
-    modifyText.innerText = "To modify this game, enter the new details into the form and press submit."
+    modifyText.innerText = "To modify the selected game (indicated by red background and marked with *),\nenter the new details into the form and press submit."
     modifyText.className = "hidden"
     modifyText.id = "modifyInstructions"
-    document.body.append(modifyText)
+    document.body.children[0].append(modifyText)
 
     const response = await fetch('/games', { method: 'GET' })
-    const allGames = await response.json()
-    updateScoreTable(allGames)
+    const games = await response.json()
+    updateScoreTable(games)
 }

@@ -105,7 +105,26 @@ Include a very brief summary of your project here. Images are encouraged, along 
   - include any modifications to the CSS framework you made via custom CSS you authored
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **100 Lighthouse Score:** My main content page scores 100 on all four Lighthouse characteristics.
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+- **W3C Accessibility**: I used the following tips from the W3C Web Accessibility Initiative
+    
+    **Writing:**
+    - Page titles: I added descriptive titles to each of my 4 pages, with the page name coming before the website name
+    - Headings: My login page (index) and the main page both use headings to group their content (main page uses them to separate new game form from existing games table)
+    - Meaningful alt text: The two images used in my form for deleting and modifying have alt text that describes their purpose
+    
+    **Designing:**
+    - Color alternatives: the currently modifying game is indicated with an * instead of purely by the red background
+    - Interactive elements: all interactive elements appear disctinctly as buttons with styling provided by the picnic framework and use either the button or input semantic tags
+    - Label placement: All of my form inputs (on login, new-account, and main pages) have labels either directly above or directly to the left of the text box
+    - Group related content: my main page uses headings to separate the two sections, with noticable whitespace between them
+    
+    **Developing:**
+    - Labels with form controls: All of my form elements (except for submit buttons) have labels using the for and id attributes
+    - Include alt text: Both images used (delete and modify icons) have associated alt text
+    - Page language: all of my pages are identified with lang="en"
+    - Reading and code order: The reading order of the site matches the code order. An example of this is the game input form, where the code order matches the reading order of user's name -> opponent's name -> user's score -> etc.
+    - Keyboard interaction: each page can be navigated with the keyboard using the tab key. To facilitate this, I added tabindex="-1" to the logout button to avoid it and the anchor tag it is nested in both receiving focus.
+

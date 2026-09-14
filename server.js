@@ -58,9 +58,8 @@ app.post('/register', async (req, res) => {
 app.use((req, res, next) => {
     if(req.session.login) { next() }
     else if(publicFiles.includes(req.path)) { res.sendFile(__dirname + `/public/${req.path}`) }
-    else if(req.path === '/') { res.redirect('/index.html') }
     else { res.redirect('/index.html') }
-})
+})            
 
 app.use(express.static('public'))
 

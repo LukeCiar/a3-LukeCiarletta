@@ -1,8 +1,26 @@
-body {
+main {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+#topbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+#mainHeader {
+    margin: 0;
+    text-align: center;
+}
+
+#logoutButton {
+    position: absolute;
+    right: 2rem;
 }
 
 #scoreForm {
@@ -23,6 +41,12 @@ table, th, td {
   text-align: center;
   padding: 4px 8px; /* top/bottom   left/right */
   margin: 1rem;
+}
+
+/* Used to prevent the table from changing size when asterisk is added */
+#modHeader {
+    padding-left: 16px;
+    padding-right: 16px
 }
 
 .icon {
