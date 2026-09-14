@@ -115,7 +115,7 @@ app.post('/modify', async (req, res) => {
     setResult(game)
     game.authName = req.session.username
     await modifyGame(game)
-    await sendData(res, res)
+    await sendData(req, res)
 })
 
 app.listen(port)
